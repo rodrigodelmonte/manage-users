@@ -2,13 +2,9 @@ manage-users Cookbook
 =====================
 This simple cookbook manage linux users, configures authorized_keys and grant sudo permission.
 
-TODO:
-  - Split default recipes.
-  - Test more! 
-
 Requirements
 ------------
-TODO: 
+
    - To use this cookbook you must create a data bag 'managed_users', with data bag itens like the example below:
 {
   "id": "rodrigo",
@@ -37,6 +33,10 @@ Just include `manage-users` in your node's `run_list`:
   ]
 }
 ```
+
+TODO
+-----
+  - Test more! 
 
 License and Authors
 -------------------

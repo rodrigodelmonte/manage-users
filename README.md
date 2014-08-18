@@ -6,6 +6,8 @@ Requirements
 ------------
 
    - To use this cookbook you must create a data bag 'managed_users', with data bag itens like the example below:
+
+```json 
 {
   "id": "rodrigo",
   "ssh_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABA...",
@@ -15,8 +17,7 @@ Requirements
   "sudo":"enable",
   "status":"disable"
 }   
-
-e.g.
+```
 
 Usage
 -----

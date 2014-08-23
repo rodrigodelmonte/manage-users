@@ -6,7 +6,14 @@
 #
 # All rights reserved - Do Not Redistribute
 #
+include_recipe 'sudo'
+
 users = data_bag('managed_users')
+
+group 'sysadmin' do
+  action :create
+  append true
+end
 
 users.each do |login|
   managed_user = data_bag_item('managed_users', login)
@@ -30,36 +37,16 @@ users.each do |login|
 
   #Grant sudo.
   if managed_user['sudo'] == 'enable'
- 
-    group "sudo" do
-      action :modify
-      members login
-      append true
-    end
-    
-    sudo_user_file = managed_user['id'].sub('.','-')
-    template '/etc/sudoers.d/' + sudo_user_file do
-      source "sudoers.erb"
-      mode 0440
-      owner "root"
-      group "root"
-      variables({:user => login })
-    end	
-  end
-
-  #Remove users with status disable.
-  if managed_user['status'] == 'disable'
-  	
-  	user(login) do
-      action :remove
-  	end
-
-  	sudo_user_file = '/etc/sudoers.d/' + managed_user['id'].sub('.','-')
-  	if File.file?(sudo_user_file)
-      file sudo_user_file do
-        action :delete 
+    	group 'sysadmin' do
+        action :modify
+        members login
       end
-    end
   end
 
+  #Remove users disabled.
+  if managed_user['status'] == 'disable'
+   	user(login) do
+       action :remove
+    end
+  end
 end
